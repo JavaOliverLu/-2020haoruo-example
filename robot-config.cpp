@@ -9,8 +9,8 @@ brain  Brain;
 
 // VEXcode device constructors
 motor Motor3 = motor(PORT3, ratio18_1, false);
-motor Motor10 = motor(PORT10, ratio18_1, false);
-motor Motor1 = motor(PORT1, ratio18_1, false);
+motor rightMotor = motor(PORT10, ratio18_1, false);
+motor leftMotor = motor(PORT1, ratio18_1, false);
 motor Motor8 = motor(PORT8, ratio18_1, false);
 controller Controller1 = controller(primary);
 bumper BumperA = bumper(Brain.ThreeWirePort.A);

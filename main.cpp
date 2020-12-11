@@ -1,47 +1,60 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       C:\Users\u17m0                                            */
-/*    Created:      Fri Nov 06 2020                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include <cmath>
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// leftmotor            motor         10              
+// rightmotor           motor         1               
+// armmotor             motor         8               
+// crabmotor            motor         9               
+// limitSwitch          bumper        A               
+// Controller1          controller                    
+// ---- END VEXCODE CONFIGURED DEVICES ----
 
 using namespace vex;
+// double m_quickStopAccumulator = 0, leftout, rightout;
 
 int main() {
-  // Initializing Robot Configuration. DO NOT REMOVE!
+
   vexcodeInit();
-  int x,y;
-  while(true){
-    if(Controller1.Axis1.position()>0){
-      x=50;
-
-    }
-    else if(Controller1.Axis1.position()<0){
-      x=-50;}
-      else{x=0;
+  // Controller1.ButtonL1.released(armMotorForward); 
+  // uint32_t i = 0;
+  // int sleep = 0;
+  bool reverse = true;
+  while(1){
+    int left = Controller1.Axis2.position(percent) + Controller1.Axis1.position(percent) 
+                  + Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent);
+    int right = Controller1.Axis2.position(percent) - Controller1.Axis1.position(percent) 
+                  + Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent);
+    
+    leftMotor.spin(forward, left * 0.8, pct);
+    rightMotor.spin(forward, right * 0.8, pct);
+    
+    //limitSwitch
+    if(Controller1.ButtonL2.pressing()){
+      while(reverse){
+        leftMotor.spin(forward, -80, pct);
+        rightMotor.spin(forward, -80, pct);
+        if(BumperA.pressing() || Controller1.ButtonL1.pressing()){
+          reverse = false;
+        }
       }
-
-      if(Controller1.Axis2.position()>0){
-      y=50;
-
+      leftMotor.spin(forward, 0, pct);
+      rightMotor.spin(forward, 0, pct);
     }
-    else if(Controller1.Axis2.position()<0){
-      y=-50;}
-      else{y=0;
-      }
-      
-      
-      right.spin(forward,y-x,pct);
-      left.spin(forward,y+x,pct);
-
-
+    reverse = true;
+    
+   
   }
-  
+
+
+
+
+
+
+
+
 }

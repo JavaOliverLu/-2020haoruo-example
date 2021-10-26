@@ -1,6 +1,6 @@
 public class ch4_05 {
   public static void main(String args[]){
-    int age=30;
+    int age=16;
     if(age>18){
       System.out.println("抓去關");
       }
